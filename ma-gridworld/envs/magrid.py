@@ -226,7 +226,7 @@ class parallel_env(ParallelEnv):
                 elif [x, y] in self.walls:
                     print("x", end="")
                 elif [x, y] in self.positions:
-                    print("s", end="")
+                    print("a", end="")
                 else:
                     print(" ", end="")
             print("")
