@@ -30,7 +30,8 @@ class parallel_env(ParallelEnv):
         self.agents = [0, 1]
         self.possible_agents = self.agents[:]
 
-        action_space = gym.spaces.Box(low=-1, high=1, shape=(1,), dtype=np.float32)
+        # action_space = gym.spaces.Box(low=-1, high=1, shape=(1,), dtype=np.float32)
+        action_space = gym.spaces.Discrete(4)
         self.action_spaces = {i: action_space for i in self.agents}
 
         observation_space = gym.spaces.Box(
@@ -126,14 +127,28 @@ class parallel_env(ParallelEnv):
 
         return obs, rew, terminated, truncated, info
     
+    # def get_direction(self, action):
+    #     if action < -0.5:
+    #         # Move left
+    #         return [0, -1]
+    #     elif action < 0:
+    #         # Move down
+    #         return [1, 0]
+    #     elif action < 0.5:
+    #         # Move right
+    #         return [0, 1]
+    #     else:
+    #         # Move up
+    #         return [-1, 0]
+    
     def get_direction(self, action):
-        if action < -0.5:
+        if action == 0:
             # Move left
             return [0, -1]
-        elif action < 0:
+        elif action == 1:
             # Move down
             return [1, 0]
-        elif action < 0.5:
+        elif action == 2:
             # Move right
             return [0, 1]
         else:
@@ -195,7 +210,7 @@ class parallel_env(ParallelEnv):
         
     def get_rew(self, agent):
         if self.collision:
-            return -100
+            return -1000
         
         if self.positions[agent] == self.goal:
             return 1
